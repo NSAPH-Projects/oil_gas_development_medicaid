@@ -25,10 +25,8 @@ Medicare data used in this study cannot be shared nor made publicly available du
 Medicare patient individual-level data used for this analysis are stored at a Level-3 secured data platform on Research Computing Environment, supported by the Institute for Quantitative Social Science in the Faculty of Arts and Sciences at Harvard University. Code used to process these data can be found here: https://github.com/NSAPH-Data-Processing/medicaid_mental_health_aggregated 
 
  
+Data used for county-level oil and gas production are available from the United States Department of Agriculture at https://www.ers.usda.gov/data-products/county-level-oil-and-gas-production-in-the-united-states/. 
 
-Area demographic data originate from the National Bureau of Economic Research Survey of Epidemiology and End Results (SEER) U.S. State and County Population Data by Age, Race, Sex Hispanic 1969-on https://www.nber.org/research/data/survey-epidemiology-and-end-results-seer-us-state-and-county-population-data-age-race-sex-hispanic.  Data used for county-level oil and gas production are available from the United States Department of Agriculture at https://www.ers.usda.gov/data-products/county-level-oil-and-gas-production-in-the-united-states/. 
-
- 
 
 Other public data sources used directly from source include:  
 
