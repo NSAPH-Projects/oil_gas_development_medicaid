@@ -108,8 +108,8 @@ ntable <- function(model, dataframe){
 }
 
 
-localDat <- "oil_gas_development_medicaid/Data/"
-analyticDat <- "analytic/medicaid_mental_health/"
+localDat <- ""
+analyticDat <- ""
 
 
 

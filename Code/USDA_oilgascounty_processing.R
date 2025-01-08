@@ -37,8 +37,8 @@ library(tidyr)
 library(dplyr)
 
 
-inDir <- "oil_gas_development_medicaid/Data/Raw/"
-outDir <- "oil_gas_development_medicaid/Data/"
+inDir <- ""
+outDir <- ""
 
 
 dat <- read_excel(paste0(inDir, "oilgascounty_1_long.xlsx"))

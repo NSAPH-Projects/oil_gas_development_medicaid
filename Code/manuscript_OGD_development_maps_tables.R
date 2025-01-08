@@ -59,7 +59,7 @@ library(haven)
 '%!in%' <- function(x,y)!('%in%'(x,y))
 
 
-localDat <- "oil_gas_development_medicaid/Data/"
+localDat <- ""
 
 ## Load and process analytic data
 dat <- read.csv(paste0(localDat, "oilgascounty_1_long_an.csv"))

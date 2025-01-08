@@ -25,8 +25,8 @@ library(tidyr)
 ## Data downloaded from: https://www.nber.org/research/data/survey-epidemiology-and-end-results-seer-us-state-and-county-population-data-age-race-sex-hispanic
 ## Dictionary located here: https://seer.cancer.gov/popdata/popdic.html
 
-rawDir <- "oil_gas_development_medicaid/Data/Raw/"
-analyticDir <- "oil_gas_development_medicaid/Data/"
+rawDir <- ""
+analyticDir <- ""
 
 test <- fread(paste0(rawDir, "usrace19agesadj.csv"))
 
