@@ -37,6 +37,7 @@ U.S. Census SAIPE datasets available from: https://www.census.gov/programs-surve
 
 The National Bureau of Economic Research Survey of Epidemiology and End Results (SEER) U.S. State and County Population Data by Age, Race, Sex, Hispanic 1969-on available from: https://www.nber.org/research/data/survey-epidemiology-and-end-results-seer-us-state-and-county-population-data-age-race-sex-hispanic   
 
+These public sources can be found in the respository and/or available through the links provided.
  
 
 All the analyses are run on 
