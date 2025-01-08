@@ -7,7 +7,6 @@ This repository contains code to support the manuscript “Impact of Boom and Bu
  
 
 Code: 
-NBER_data_processing.R: This file is used to process public population estimates from NBER.  
 
 USDA_oilgascounty_processing.R: This file is used to create boom/bust indicators from UDSA oil and gas data  
 
@@ -25,10 +24,8 @@ Medicare data used in this study cannot be shared nor made publicly available du
 Medicare patient individual-level data used for this analysis are stored at a Level-3 secured data platform on Research Computing Environment, supported by the Institute for Quantitative Social Science in the Faculty of Arts and Sciences at Harvard University. Code used to process these data can be found here: https://github.com/NSAPH-Data-Processing/medicaid_mental_health_aggregated 
 
  
-Data used for county-level oil and gas production are available from the United States Department of Agriculture at https://www.ers.usda.gov/data-products/county-level-oil-and-gas-production-in-the-united-states/. 
 
-
-Other public data sources used directly from source include:  
+Data used for county-level oil and gas production are available from the United States Department of Agriculture at https://www.ers.usda.gov/data-products/county-level-oil-and-gas-production-in-the-united-states/. Other public data sources used directly from source include:  
 
 The CDC Social Vulnerability Index available from: https://www.atsdr.cdc.gov/place-health/php/svi/svi-data-documentation-download.html  
 
@@ -37,6 +34,8 @@ Census County-to-County Migration Flow tables available from: https://www.census
 Census TIGER files available from https://www.census.gov/geographies/mapping-files/2010/geo/tiger-line-file.html 
 
 U.S. Census SAIPE datasets available from: https://www.census.gov/programs-surveys/saipe/data/datasets.html  
+
+The National Bureau of Economic Research Survey of Epidemiology and End Results (SEER) U.S. State and County Population Data by Age, Race, Sex, Hispanic 1969-on available from: https://www.nber.org/research/data/survey-epidemiology-and-end-results-seer-us-state-and-county-population-data-age-race-sex-hispanic   
 
  
 
@@ -48,7 +47,7 @@ Platform: x86_64-pc-linux-gnu (64-bit)
  
 
 Terms of Use: 
-By using the contents on this Github repo and the article, you agree to cite our paper. 
+By using the contents on this GitHub repo and the article, you agree to cite our paper. 
 
  
 
@@ -67,4 +66,4 @@ Nina Cesare: ncesare@bu.edu
 Acknowledgments 
 
 We recognize the support of the National Studies in Air Pollution and Health (NSAPH) Lab at Harvard University for computing resources and support.  
- # oil_gas_development_medicaid
+ 
