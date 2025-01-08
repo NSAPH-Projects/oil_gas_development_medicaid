@@ -25,7 +25,7 @@ Medicare patient individual-level data used for this analysis are stored at a Le
 
  
 
-Data used to generate county-level oil and gas production measures (in /Data) are available from the United States Department of Agriculture at https://www.ers.usda.gov/data-products/county-level-oil-and-gas-production-in-the-united-states/. Other public data sources used directly from source include:  
+Data used to generate county-level oil and gas production measures (analytic available in /Data) are available from the United States Department of Agriculture at https://www.ers.usda.gov/data-products/county-level-oil-and-gas-production-in-the-united-states/. Other public data sources used directly from source include:  
 
 The CDC Social Vulnerability Index available from: https://www.atsdr.cdc.gov/place-health/php/svi/svi-data-documentation-download.html  
 
