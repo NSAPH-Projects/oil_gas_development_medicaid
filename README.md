@@ -25,7 +25,7 @@ Medicare patient individual-level data used for this analysis are stored at a Le
 
  
 
-Data used for county-level oil and gas production are available from the United States Department of Agriculture at https://www.ers.usda.gov/data-products/county-level-oil-and-gas-production-in-the-united-states/. Other public data sources used directly from source include:  
+Data used to generate county-level oil and gas production measures (in /Data) are available from the United States Department of Agriculture at https://www.ers.usda.gov/data-products/county-level-oil-and-gas-production-in-the-united-states/. Other public data sources used directly from source include:  
 
 The CDC Social Vulnerability Index available from: https://www.atsdr.cdc.gov/place-health/php/svi/svi-data-documentation-download.html  
 
@@ -35,7 +35,7 @@ Census TIGER files available from https://www.census.gov/geographies/mapping-fil
 
 U.S. Census SAIPE datasets available from: https://www.census.gov/programs-surveys/saipe/data/datasets.html  
 
-The National Bureau of Economic Research Survey of Epidemiology and End Results (SEER) U.S. State and County Population Data by Age, Race, Sex, Hispanic 1969-on available from: https://www.nber.org/research/data/survey-epidemiology-and-end-results-seer-us-state-and-county-population-data-age-race-sex-hispanic   
+The National Bureau of Economic Research Survey of Epidemiology and End Results (SEER) U.S. State and County Population Data by Age, Race, Sex, Hispanic 1969-on available from: https://www.nber.org/research/data/survey-epidemiology-and-end-results-seer-us-state-and-county-population-data-age-race-sex-hispanic (analytic included in /Data)
 
 These public sources can be found in the respository and/or available through the links provided.
  
