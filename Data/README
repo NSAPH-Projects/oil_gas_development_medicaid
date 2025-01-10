@@ -1,0 +1,12 @@
+File: oilgascounty_1_long_an.csv
+Source: Data used to generate county-level oil and gas production measures (analytic available in /Data) are available from the United States Department of Agriculture at https://www.ers.usda.gov/data-products/county-level-oil-and-gas-production-in-the-united-states/. 
+Code: USDA_oilgascounty_processing.R
+
+
+File: usrace19ageadj_analytic.xlsx
+Source: The National Bureau of Economic Research Survey of Epidemiology and End Results (SEER) U.S. State and County Population Data by Age, Race, Sex, Hispanic 1969-on available from: https://www.nber.org/research/data/survey-epidemiology-and-end-results-seer-us-state-and-county-population-data-age-race-sex-hispanic (analytic included in /Data)
+Code: NBER_data_processing.R
+
+
+File: state_names_fips.csv
+Source: State names, abbreviations and FIPS codes used by the U.S. Census. See https://www.census.gov/library/reference/code-lists/ansi.html
