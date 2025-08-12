@@ -24,6 +24,14 @@
 # PROGRAMMER    : Flannery Black-Ingersoll
 # DESCRIPTION   : Added annotations
 #######################################################################################
+# MODIFICATIONS : Sensitivity analyses
+#                 Created 10 pct and 30 pct stratified results 
+#
+#
+# DATE          : 05/13/2025
+# PROGRAMMER    : Nina Cesare
+# DESCRIPTION   : 
+#######################################################################################
 
 Sys.setenv(http_proxy="http://rcproxy.rc.fas.harvard.edu:3128")
 Sys.setenv(https_proxy="http://rcproxy.rc.fas.harvard.edu:3128")
@@ -2803,6 +2811,1658 @@ print("All mental health - truncated")
 summary(mod_event_mh_bust_factor_trunc)
 
 
+
+
+
+#### SENSITIVITY ANALYSES - 30 PCT THRESHOLD ####
+
+##### Set 13: Negative binomial models, no covariates. County/year FE. boom/bust threshold at 30%. Contemporaneous indicator w/carry through #####
+
+
+plm_mh13 <- fenegbin(mental_health_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge)
+plm_adj13 <- fenegbin(adjustment_reaction_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge)
+plm_anx13 <- fenegbin(anxiety_disorders_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge)
+plm_att13 <- fenegbin(attention_disorders_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge)
+plm_mood13 <- fenegbin(mood_disorders_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge)
+plm_pers13 <- fenegbin(personality_disorders_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge)
+plm_schiz13 <- fenegbin(schizophrenia_psychotic_disorders_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge)
+plm_alc13 <- fenegbin(alcohol_disorders_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge)
+plm_sub13 <- fenegbin(substance_disorders_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge)
+plm_suic13 <- fenegbin(suicide_self_harm_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge)
+
+
+
+plm_mh13_clust <- fenegbin(mental_health_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge, cluster = ~ residence_county + year)
+plm_adj13_clust <- fenegbin(adjustment_reaction_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge, cluster = ~ residence_county + year)
+plm_anx13_clust <- fenegbin(anxiety_disorders_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge, cluster = ~ residence_county + year)
+plm_att13_clust <- fenegbin(attention_disorders_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge, cluster = ~ residence_county + year)
+plm_mood13_clust <- fenegbin(mood_disorders_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge, cluster = ~ residence_county + year)
+plm_pers13_clust <- fenegbin(personality_disorders_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge, cluster = ~ residence_county + year)
+plm_schiz13_clust <- fenegbin(schizophrenia_psychotic_disorders_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge, cluster = ~ residence_county + year)
+plm_alc13_clust <- fenegbin(alcohol_disorders_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge, cluster = ~ residence_county + year)
+plm_sub13_clust <- fenegbin(substance_disorders_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge, cluster = ~ residence_county + year)
+plm_suic13_clust <- fenegbin(suicide_self_harm_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge, cluster = ~ residence_county + year)
+
+
+print("Negative binomial models with county and year fixed effects. No covariates")
+print("Uses contemporaneous boom/bust indicator, carried through, with 30% threshold")
+print("")
+
+print("All mental health hospitalizations")
+summary(plm_mh13)
+
+print("Adjustment disorder")
+summary(plm_adj13)
+
+print("Anxiety disorder")
+summary(plm_anx13)
+
+print("Attention disorder")
+summary(plm_att13)
+
+print("Mood disorder")
+summary(plm_mood13)
+
+print("Personality disorder")
+summary(plm_pers13)
+
+print("Schizophrenia")
+summary(plm_schiz13)
+
+print("Alcohol use disorder")
+summary(plm_alc13)
+
+print("Substance use disorder")
+summary(plm_sub13)
+
+print("Suicide/self-harm")
+summary(plm_suic13)
+
+
+print("Negative binomial models with county and year fixed effects. No covariates")
+print("Uses contemporaneous boom/bust indicator, carried through, with 30% threshold")
+print("")
+
+print("All mental health hospitalizations")
+summary(plm_mh13_clust)
+
+print("Adjustment disorder")
+summary(plm_adj13_clust)
+
+print("Anxiety disorder")
+summary(plm_anx13_clust)
+
+print("Attention disorder")
+summary(plm_att13_clust)
+
+print("Mood disorder")
+summary(plm_mood13_clust)
+
+print("Personality disorder")
+summary(plm_pers13_clust)
+
+print("Schizophrenia")
+summary(plm_schiz13_clust)
+
+print("Alcohol use disorder")
+summary(plm_alc13_clust)
+
+print("Substance use disorder")
+summary(plm_sub13_clust)
+
+print("Suicide/self-harm")
+summary(plm_suic13_clust)
+
+
+print("Mental health hospitalizations")
+plm_mh13_out <- cbind(Estimate = coef(plm_mh13), stats::confint(plm_mh13)[-3,])
+plm_mh13_irr <- exp(plm_mh13_out)
+plm_mh13_irr
+
+print("Adjustment disorder")
+plm_adj13_out <- cbind(Estimate = coef(plm_adj13),  stats::confint(plm_adj13)[-3,])
+plm_adj13_irr <- exp(plm_adj13_out)
+plm_adj13_irr
+
+print("Anxiety disorder")
+plm_anx13_out <- cbind(Estimate = coef(plm_anx13),  stats::confint(plm_anx13)[-3,])
+plm_anx13_irr <- exp(plm_anx13_out)
+plm_anx13_irr
+
+
+print("Attention disorder")
+plm_att13_out <- cbind(Estimate = coef(plm_att13),  stats::confint(plm_att13)[-3,])
+plm_att13_irr <- exp(plm_att13_out)
+plm_att13_irr
+
+
+print("Mood disorder")
+plm_mood13_out <- cbind(Estimate = coef(plm_mood13),  stats::confint(plm_mood13)[-3,])
+plm_mood13_irr <- exp(plm_mood13_out)
+plm_mood13_irr
+
+print("Personality disorder")
+plm_pers13_out <- cbind(Estimate = coef(plm_pers13),  stats::confint(plm_pers13)[-3,])
+plm_pers13_irr <- exp(plm_pers13_out)
+plm_pers13_irr
+
+print("Schizophrenia")
+plm_schiz13_out <- cbind(Estimate = coef(plm_schiz13),  stats::confint(plm_schiz13)[-3,])
+plm_schiz13_irr <- exp(plm_schiz13_out)
+plm_schiz13_irr
+
+print("Alcohol use disorder")
+plm_alc13_out <- cbind(Estimate = coef(plm_alc13),  stats::confint(plm_alc13)[-3,])
+plm_alc13_irr <- exp(plm_alc13_out)
+plm_alc13_irr
+
+
+print("Substance use disorder")
+plm_sub13_out <- cbind(Estimate = coef(plm_sub13),  stats::confint(plm_sub13)[-3,])
+plm_sub13_irr <- exp(plm_sub13_out)
+plm_sub13_irr
+
+
+print("Suicide/self-harm")
+plm_suic13_out <- cbind(Estimate = coef(plm_suic13),  stats::confint(plm_suic13)[-3,])
+plm_suic13_irr <- exp(plm_suic13_out)
+plm_suic13_irr
+
+
+
+print("Mental health hospitalizations")
+
+plm_mh13_out <- cbind(Estimate = coef(plm_mh13_clust), stats::confint(plm_mh13_clust)[-3,])
+plm_mh13_irr <- exp(plm_mh13_out)
+plm_mh13_irr
+
+print("Adjustment disorder")
+plm_adj13_out <- cbind(Estimate = coef(plm_adj13_clust), confint(plm_adj13_clust)[-3,])
+plm_adj13_irr <- exp(plm_adj13_out)
+plm_adj13_irr
+
+print("Anxiety disorder")
+plm_anx13_out <- cbind(Estimate = coef(plm_anx13_clust), confint(plm_anx13_clust)[-3,])
+plm_anx13_irr <- exp(plm_anx13_out)
+plm_anx13_irr
+
+
+print("Attention disorder")
+plm_att13_out <- cbind(Estimate = coef(plm_att13_clust), confint(plm_att13_clust)[-3,])
+plm_att13_irr <- exp(plm_att13_out)
+plm_att13_irr
+
+
+print("Mood disorder")
+plm_mood13_out <- cbind(Estimate = coef(plm_mood13_clust), confint(plm_mood13_clust)[-3,])
+plm_mood13_irr <- exp(plm_mood13_out)
+plm_mood13_irr
+
+print("Personality disorder")
+plm_pers13_out <- cbind(Estimate = coef(plm_pers13_clust), confint(plm_pers13_clust)[-3,])
+plm_pers13_irr <- exp(plm_pers13_out)
+plm_pers13_irr
+
+print("Schizophrenia")
+plm_schiz13_out <- cbind(Estimate = coef(plm_schiz13_clust), confint(plm_schiz13_clust)[-3,])
+plm_schiz13_irr <- exp(plm_schiz13_out)
+plm_schiz13_irr
+
+print("Alcohol use disorder")
+plm_alc13_out <- cbind(Estimate = coef(plm_alc13_clust), confint(plm_alc13_clust)[-3,])
+plm_alc13_irr <- exp(plm_alc13_out)
+plm_alc13_irr
+
+
+print("Substance use disorder")
+plm_sub13_out <- cbind(Estimate = coef(plm_sub13_clust), confint(plm_sub13_clust)[-3,])
+plm_sub13_irr <- exp(plm_sub13_out)
+plm_sub13_irr
+
+
+print("Suicide/self-harm")
+plm_suic13_out <- cbind(Estimate = coef(plm_suic13_clust), confint(plm_suic13_clust)[-3,])
+plm_suic13_irr <- exp(plm_suic13_out)
+plm_suic13_irr
+
+
+
+
+##### Set 13: Negative binomial models, no covariates. County/year FE. boom/bust threshold at 30%. Contemporaneous indicator w/carry through. Stratified by demographics ########
+
+
+
+#1: Non-Hispanic White
+#2: Black (or African-American)
+#4: Asian/Pacific Islander
+#5/7: Hispanic
+
+files_new_female <- vector(mode='list', length=12)
+files_new_male <- vector(mode='list', length=12)
+
+files_new_white <- vector(mode='list', length=12)
+files_new_black <- vector(mode='list', length=12)
+files_new_latine <- vector(mode='list', length=12)
+
+files_new_19to44 <- vector(mode='list', length=12)
+files_new_45to64 <- vector(mode='list', length=12)
+files_new_65plus <- vector(mode='list', length=12)
+
+
+
+years <- c(2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011)
+
+
+for(i in 1:length(years)){
+  file <- files[[i]]
+  file <- file[which(file$age_group != "0-18"),]
+  file$residence_county <- as.character(file$residence_county)
+  
+  file_new_female <- file[which(file$sex == "F"),] %>% dplyr::select(-contains(c("year","month","state","sex","race","age_group"))) %>% dplyr::group_by(residence_county) %>% summarize_all(.funs = c(sum), na.rm = TRUE)
+  file_new_female$year <- years[i]
+  files_new_female[[i]] <- file_new_female
+  
+  file_new_male <- file[which(file$sex == "M"),] %>% dplyr::select(-contains(c("year","month","state","sex","race","age_group"))) %>% dplyr::group_by(residence_county) %>% summarize_all(.funs = c(sum), na.rm = TRUE)
+  file_new_male$year <- years[i]
+  files_new_male[[i]] <- file_new_male
+  
+  file_new_white <- file[which(file$race == 1),] %>% dplyr::select(-contains(c("year","month","state","sex","race","age_group"))) %>% dplyr::group_by(residence_county) %>% summarize_all(.funs = c(sum), na.rm = TRUE)
+  file_new_white$year <- years[i]
+  files_new_white[[i]] <- file_new_white
+  
+  file_new_black <- file[which(file$race == 2),] %>% dplyr::select(-contains(c("year","month","state","sex","race","age_group"))) %>% dplyr::group_by(residence_county) %>% summarize_all(.funs = c(sum), na.rm = TRUE)
+  file_new_black$year <- years[i]
+  files_new_black[[i]] <- file_new_black
+  
+  file_new_latine <- file[which(file$race == 5 | file$race == 7),] %>% dplyr::select(-contains(c("year","month","state","sex","race","age_group"))) %>% dplyr::group_by(residence_county) %>% summarize_all(.funs = c(sum), na.rm = TRUE)
+  file_new_latine$year <- years[i]
+  files_new_latine[[i]] <- file_new_latine
+  
+  
+  file_new_19to44 <- file[which(file$age_group == "19-24" | file$age_group == "30-34" | file$age_group == "35-44"),] %>% dplyr::select(-contains(c("year","month","state","sex","race","age_group"))) %>% dplyr::group_by(residence_county) %>% summarize_all(.funs = c(sum), na.rm = TRUE)
+  file_new_19to44$year <- years[i]
+  files_new_19to44[[i]] <- file_new_19to44
+  
+  file_new_45to64 <- file[which(file$age_group == "45-54" | file$age_group == "55-64"),] %>% dplyr::select(-contains(c("year","month","state","sex","race","age_group"))) %>% dplyr::group_by(residence_county) %>% summarize_all(.funs = c(sum), na.rm = TRUE)
+  file_new_45to64$year <- years[i]
+  files_new_45to64[[i]] <- file_new_45to64
+  
+  file_new_65plus <- file[which(file$age_group == "65-74" | file$age_group == "75-84" | file$age_group == "85+"),] %>% dplyr::select(-contains(c("year","month","state","sex","race","age_group"))) %>% dplyr::group_by(residence_county) %>% summarize_all(.funs = c(sum), na.rm = TRUE)
+  file_new_65plus$year <- years[i]
+  files_new_65plus[[i]] <- file_new_65plus
+  
+  
+  print(i)
+}
+
+
+files_new_female_df <- rbind(files_new_female[[1]],
+                             files_new_female[[2]],
+                             files_new_female[[3]],
+                             files_new_female[[4]],
+                             files_new_female[[5]],
+                             files_new_female[[6]],
+                             files_new_female[[7]],
+                             files_new_female[[8]],
+                             files_new_female[[9]],
+                             files_new_female[[10]],
+                             files_new_female[[11]],
+                             files_new_female[[12]])
+files_new_female_df$residence_county <- unlist(lapply(files_new_female_df$residence_county, function(x) county_fips_fix(as.character(x))))
+
+
+files_new_male_df <- rbind(files_new_male[[1]],
+                           files_new_male[[2]],
+                           files_new_male[[3]],
+                           files_new_male[[4]],
+                           files_new_male[[5]],
+                           files_new_male[[6]],
+                           files_new_male[[7]],
+                           files_new_male[[8]],
+                           files_new_male[[9]],
+                           files_new_male[[10]],
+                           files_new_male[[11]],
+                           files_new_male[[12]])
+files_new_male_df$residence_county <- unlist(lapply(files_new_male_df$residence_county, function(x) county_fips_fix(as.character(x))))
+
+
+files_new_white_df <- rbind(files_new_white[[1]],
+                            files_new_white[[2]],
+                            files_new_white[[3]],
+                            files_new_white[[4]],
+                            files_new_white[[5]],
+                            files_new_white[[6]],
+                            files_new_white[[7]],
+                            files_new_white[[8]],
+                            files_new_white[[9]],
+                            files_new_white[[10]],
+                            files_new_white[[11]],
+                            files_new_white[[12]])
+files_new_white_df$residence_county <- unlist(lapply(files_new_white_df$residence_county, function(x) county_fips_fix(as.character(x))))
+
+
+files_new_black_df <- rbind(files_new_black[[1]],
+                            files_new_black[[2]],
+                            files_new_black[[3]],
+                            files_new_black[[4]],
+                            files_new_black[[5]],
+                            files_new_black[[6]],
+                            files_new_black[[7]],
+                            files_new_black[[8]],
+                            files_new_black[[9]],
+                            files_new_black[[10]],
+                            files_new_black[[11]],
+                            files_new_black[[12]])
+files_new_black_df$residence_county <- unlist(lapply(files_new_black_df$residence_county, function(x) county_fips_fix(as.character(x))))
+
+
+files_new_latine_df <- rbind(files_new_latine[[1]],
+                             files_new_latine[[2]],
+                             files_new_latine[[3]],
+                             files_new_latine[[4]],
+                             files_new_latine[[5]],
+                             files_new_latine[[6]],
+                             files_new_latine[[7]],
+                             files_new_latine[[8]],
+                             files_new_latine[[9]],
+                             files_new_latine[[10]],
+                             files_new_latine[[11]],
+                             files_new_latine[[12]])
+files_new_latine_df$residence_county <- unlist(lapply(files_new_latine_df$residence_county, function(x) county_fips_fix(as.character(x))))
+
+
+files_new_19to44_df <- rbind(files_new_19to44[[1]],
+                             files_new_19to44[[2]],
+                             files_new_19to44[[3]],
+                             files_new_19to44[[4]],
+                             files_new_19to44[[5]],
+                             files_new_19to44[[6]],
+                             files_new_19to44[[7]],
+                             files_new_19to44[[8]],
+                             files_new_19to44[[9]],
+                             files_new_19to44[[10]],
+                             files_new_19to44[[11]],
+                             files_new_19to44[[12]])
+files_new_19to44_df$residence_county <- unlist(lapply(files_new_19to44_df$residence_county, function(x) county_fips_fix(as.character(x))))
+
+
+files_new_45to64_df <- rbind(files_new_45to64[[1]],
+                             files_new_45to64[[2]],
+                             files_new_45to64[[3]],
+                             files_new_45to64[[4]],
+                             files_new_45to64[[5]],
+                             files_new_45to64[[6]],
+                             files_new_45to64[[7]],
+                             files_new_45to64[[8]],
+                             files_new_45to64[[9]],
+                             files_new_45to64[[10]],
+                             files_new_45to64[[11]],
+                             files_new_45to64[[12]])
+files_new_45to64_df$residence_county <- unlist(lapply(files_new_45to64_df$residence_county, function(x) county_fips_fix(as.character(x))))
+
+
+files_new_65plus_df <- rbind(files_new_65plus[[1]],
+                             files_new_65plus[[2]],
+                             files_new_65plus[[3]],
+                             files_new_65plus[[4]],
+                             files_new_65plus[[5]],
+                             files_new_65plus[[6]],
+                             files_new_65plus[[7]],
+                             files_new_65plus[[8]],
+                             files_new_65plus[[9]],
+                             files_new_65plus[[10]],
+                             files_new_65plus[[11]],
+                             files_new_65plus[[12]])
+
+files_new_65plus_df$residence_county <- unlist(lapply(files_new_65plus_df$residence_county, function(x) county_fips_fix(as.character(x))))
+
+
+merge_white <- merge(files_new_white_df, dat, by = c("residence_county", "year"))
+merge_black <- merge(files_new_black_df, dat, by = c("residence_county", "year"))
+merge_latine <- merge(files_new_latine_df, dat, by = c("residence_county", "year"))
+merge_female <- merge(files_new_female_df, dat, by = c("residence_county", "year"))
+merge_male <- merge(files_new_male_df, dat, by = c("residence_county", "year"))
+merge_19to44 <- merge(files_new_19to44_df, dat, by = c("residence_county", "year"))
+merge_45to64 <- merge(files_new_45to64_df, dat, by = c("residence_county", "year"))
+merge_65plus <- merge(files_new_65plus_df, dat, by = c("residence_county", "year"))
+
+merge_white$state_fips_complete <- substr(merge_white$residence_county, 1,2)
+merge_black$state_fips_complete <- substr(merge_black$residence_county, 1,2)
+merge_latine$state_fips_complete <- substr(merge_latine$residence_county, 1,2)
+merge_male$state_fips_complete <- substr(merge_male$residence_county, 1,2)
+merge_female$state_fips_complete <- substr(merge_female$residence_county, 1,2)
+merge_19to44$state_fips_complete <- substr(merge_19to44$residence_county, 1,2)
+merge_45to64$state_fips_complete <- substr(merge_45to64$residence_county, 1,2)
+merge_65plus$state_fips_complete <- substr(merge_65plus$residence_county, 1,2)
+
+
+## state names from above
+merge_white <- merge(merge_white, state_names[,c("state_fips_complete","State.Abbreviation")], by = "state_fips_complete", all = TRUE) # 38299 x 80
+merge_black <- merge(merge_black, state_names[,c("state_fips_complete","State.Abbreviation")], by = "state_fips_complete", all = TRUE) # 38299 x 80
+merge_latine <- merge(merge_latine, state_names[,c("state_fips_complete","State.Abbreviation")], by = "state_fips_complete", all = TRUE) # 38299 x 80
+merge_male <- merge(merge_male, state_names[,c("state_fips_complete","State.Abbreviation")], by = "state_fips_complete", all = TRUE) # 38299 x 80
+merge_female <- merge(merge_female, state_names[,c("state_fips_complete","State.Abbreviation")], by = "state_fips_complete", all = TRUE) # 38299 x 80
+merge_19to44 <- merge(merge_19to44, state_names[,c("state_fips_complete","State.Abbreviation")], by = "state_fips_complete", all = TRUE) # 38299 x 80
+merge_45to64 <- merge(merge_45to64, state_names[,c("state_fips_complete","State.Abbreviation")], by = "state_fips_complete", all = TRUE) # 38299 x 80
+merge_65plus <- merge(merge_65plus, state_names[,c("state_fips_complete","State.Abbreviation")], by = "state_fips_complete", all = TRUE) # 38299 x 80
+
+
+
+
+## objects states_to_remove and counties_zero created above
+merge_white <- merge_white[-which(merge_white$State.Abbreviation %in% states_to_remove),]
+merge_white <- merge_white[-which(merge_white$residence_county %in% counties_zero),]
+
+merge_black <- merge_black[-which(merge_black$State.Abbreviation %in% states_to_remove),]
+merge_black <- merge_black[-which(merge_black$residence_county %in% counties_zero),]
+
+merge_latine <- merge_latine[-which(merge_latine$State.Abbreviation %in% states_to_remove),]
+merge_latine <- merge_latine[-which(merge_latine$residence_county %in% counties_zero),]
+
+merge_female <- merge_female[-which(merge_female$State.Abbreviation %in% states_to_remove),]
+merge_female <- merge_female[-which(merge_female$residence_county %in% counties_zero),]
+
+merge_male <- merge_male[-which(merge_male$State.Abbreviation %in% states_to_remove),]
+merge_male <- merge_male[-which(merge_male$residence_county %in% counties_zero),]
+
+merge_19to44 <- merge_19to44[-which(merge_19to44$State.Abbreviation %in% states_to_remove),]
+merge_19to44 <- merge_19to44[-which(merge_19to44$residence_county %in% counties_zero),]
+
+merge_45to64 <- merge_45to64[-which(merge_45to64$State.Abbreviation %in% states_to_remove),]
+merge_45to64 <- merge_45to64[-which(merge_45to64$residence_county %in% counties_zero),]
+
+merge_65plus <- merge_65plus[-which(merge_65plus$State.Abbreviation %in% states_to_remove),]
+merge_65plus <- merge_65plus[-which(merge_65plus$residence_county %in% counties_zero),]
+
+
+
+
+## models - MH only - stratified 
+
+plm_mh13_white <- fenegbin(mental_health_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge_white)
+plm_mh13_black <- fenegbin(mental_health_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge_black)
+plm_mh13_latine <- fenegbin(mental_health_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge_latine)
+plm_mh13_male <- fenegbin(mental_health_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge_male)
+plm_mh13_female <- fenegbin(mental_health_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge_female)
+plm_mh13_19to44 <- fenegbin(mental_health_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge_19to44)
+plm_mh13_45to64 <- fenegbin(mental_health_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge_45to64)
+plm_mh13_65plus <- fenegbin(mental_health_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge_65plus)
+
+plm_mh13_white_clust <- fenegbin(mental_health_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge_white, cluster = ~residence_county + year)
+plm_mh13_black_clust <- fenegbin(mental_health_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge_black, cluster = ~residence_county + year)
+plm_mh13_latine_clust <- fenegbin(mental_health_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge_latine, cluster = ~residence_county + year)
+plm_mh13_male_clust <- fenegbin(mental_health_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge_male, cluster = ~residence_county + year)
+plm_mh13_female_clust <- fenegbin(mental_health_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge_female, cluster = ~residence_county + year)
+plm_mh13_19to44_clust <- fenegbin(mental_health_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge_19to44, cluster = ~residence_county + year)
+plm_mh13_45to64_clust <- fenegbin(mental_health_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge_45to64, cluster = ~residence_county + year)
+plm_mh13_65plus_clust <- fenegbin(mental_health_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge_65plus, cluster = ~residence_county + year)
+
+
+
+print("Mental health hospitalizations: White beneficiaries")
+summary(plm_mh13_white)
+
+print("Mental health hospitalizations: Black beneficiaries")
+summary(plm_mh13_black)
+
+print("Mental health hospitalizations: Latine beneficiaries")
+summary(plm_mh13_latine)
+
+print("Mental health hospitalizations: Male beneficiaries")
+summary(plm_mh13_male)
+
+print("Mental health hospitalizations: Female beneficiaries")
+summary(plm_mh13_female)
+
+print("Mental health hospitalizations: Age 19 to 44 beneficiaries")
+summary(plm_mh13_19to44)
+
+print("Mental health hospitalizations: Age 45 to 64 beneficiaries")
+summary(plm_mh13_45to64)
+
+print("Mental health hospitalizations: Age 65 plus beneficiaries")
+summary(plm_mh13_65plus)
+
+
+
+print("Mental health hospitalizations: White beneficiaries")
+plm_mh13_white_out <- cbind(Estimate = coef(plm_mh13_white), confint(plm_mh13_white)[-3,])
+plm_mh13_white_irr <- exp(plm_mh13_white_out)
+plm_mh13_white_irr
+
+
+print("Mental health hospitalizations: Black beneficiaries")
+plm_mh13_black_out <- cbind(Estimate = coef(plm_mh13_black), confint(plm_mh13_black)[-3,])
+plm_mh13_black_irr <- exp(plm_mh13_black_out)
+plm_mh13_black_irr
+
+
+print("Mental health hospitalizations: Latine beneficiaries")
+plm_mh13_latine_out <- cbind(Estimate = coef(plm_mh13_latine), confint(plm_mh13_latine)[-3,])
+plm_mh13_latine_irr <- exp(plm_mh13_latine_out)
+plm_mh13_latine_irr
+
+
+print("Mental health hospitalizations: Male beneficiaries")
+plm_mh13_male_out <- cbind(Estimate = coef(plm_mh13_male), confint(plm_mh13_male)[-3,])
+plm_mh13_male_irr <- exp(plm_mh13_male_out)
+plm_mh13_male_irr
+
+
+print("Mental health hospitalizations: Female beneficiaries")
+plm_mh13_female_out <- cbind(Estimate = coef(plm_mh13_female), confint(plm_mh13_female)[-3,])
+plm_mh13_female_irr <- exp(plm_mh13_female_out)
+plm_mh13_female_irr
+
+
+print("Mental health hospitalizations: Age 19 to 44 beneficiaries")
+plm_mh13_19to44_out <- cbind(Estimate = coef(plm_mh13_19to44), confint(plm_mh13_19to44)[-3,])
+plm_mh13_19to44_irr <- exp(plm_mh13_19to44_out)
+plm_mh13_19to44_irr
+
+
+print("Mental health hospitalizations: Age 45 to 64 beneficiaries")
+plm_mh13_45to64_out <- cbind(Estimate = coef(plm_mh13_45to64), confint(plm_mh13_45to64)[-3,])
+plm_mh13_45to64_irr <- exp(plm_mh13_45to64_out)
+plm_mh13_45to64_irr
+
+print("Mental health hospitalizations: Age 65 plus beneficiaries")
+plm_mh13_65plus_out <- cbind(Estimate = coef(plm_mh13_65plus), confint(plm_mh13_65plus)[-3,])
+plm_mh13_65plus_irr <- exp(plm_mh13_65plus_out)
+plm_mh13_65plus_irr
+
+
+
+print("Mental health hospitalizations: White beneficiaries")
+summary(plm_mh13_white_clust)
+
+print("Mental health hospitalizations: Black beneficiaries")
+summary(plm_mh13_black_clust)
+
+print("Mental health hospitalizations: Latine beneficiaries")
+summary(plm_mh13_latine_clust)
+
+print("Mental health hospitalizations: Male beneficiaries")
+summary(plm_mh13_male_clust)
+
+print("Mental health hospitalizations: Female beneficiaries")
+summary(plm_mh13_female_clust)
+
+print("Mental health hospitalizations: Age 19 to 44 beneficiaries")
+summary(plm_mh13_19to44_clust)
+
+print("Mental health hospitalizations: Age 45 to 64 beneficiaries")
+summary(plm_mh13_45to64_clust)
+
+print("Mental health hospitalizations: Age 65 plus beneficiaries")
+summary(plm_mh13_65plus_clust)
+
+
+
+print("Mental health hospitalizations: White beneficiaries")
+plm_mh13_white_out <- cbind(Estimate = coef(plm_mh13_white_clust), confint(plm_mh13_white_clust)[-3,])
+plm_mh13_white_irr <- exp(plm_mh13_white_out)
+plm_mh13_white_irr
+
+
+print("Mental health hospitalizations: Black beneficiaries")
+plm_mh13_black_out <- cbind(Estimate = coef(plm_mh13_black_clust), confint(plm_mh13_black_clust)[-3,])
+plm_mh13_black_irr <- exp(plm_mh13_black_out)
+plm_mh13_black_irr
+
+
+print("Mental health hospitalizations: Latine beneficiaries")
+plm_mh13_latine_out <- cbind(Estimate = coef(plm_mh13_latine_clust), confint(plm_mh13_latine_clust)[-3,])
+plm_mh13_latine_irr <- exp(plm_mh13_latine_out)
+plm_mh13_latine_irr
+
+
+print("Mental health hospitalizations: Male beneficiaries")
+plm_mh13_male_out <- cbind(Estimate = coef(plm_mh13_male_clust), confint(plm_mh13_male_clust)[-3,])
+plm_mh13_male_irr <- exp(plm_mh13_male_out)
+plm_mh13_male_irr
+
+
+print("Mental health hospitalizations: Female beneficiaries")
+plm_mh13_female_out <- cbind(Estimate = coef(plm_mh13_female_clust), confint(plm_mh13_female_clust)[-3,])
+plm_mh13_female_irr <- exp(plm_mh13_female_out)
+plm_mh13_female_irr
+
+
+print("Mental health hospitalizations: Age 19 to 44 beneficiaries")
+plm_mh13_19to44_out <- cbind(Estimate = coef(plm_mh13_19to44_clust), confint(plm_mh13_19to44_clust)[-3,])
+plm_mh13_19to44_irr <- exp(plm_mh13_19to44_out)
+plm_mh13_19to44_irr
+
+
+print("Mental health hospitalizations: Age 45 to 64 beneficiaries")
+plm_mh13_45to64_out <- cbind(Estimate = coef(plm_mh13_45to64_clust), confint(plm_mh13_45to64_clust)[-3,])
+plm_mh13_45to64_irr <- exp(plm_mh13_45to64_out)
+plm_mh13_45to64_irr
+
+print("Mental health hospitalizations: Age 65 plus beneficiaries")
+plm_mh13_65plus_out <- cbind(Estimate = coef(plm_mh13_65plus_clust), confint(plm_mh13_65plus_clust)[-3,])
+plm_mh13_65plus_irr <- exp(plm_mh13_65plus_out)
+plm_mh13_65plus_irr
+
+
+
+##### Set 13: Negative binomial models, no covariates. County/year FE. boom/bust threshold at 30%. Contemporaneous indicator w/carry through. Stratified by urban/rural ######
+
+#0 = micro
+#1 = noncore
+#2 = metro
+
+#Metro_Nonmetro_2013
+#0 = nonmetro
+#1 = metro
+
+plm_mh13_nonmetro <- fenegbin(mental_health_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge[which(merge$Metro_Nonmetro_2013 == 0),])
+plm_mh13_metro <- fenegbin(mental_health_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge[which(merge$Metro_Nonmetro_2013 == 1),])
+
+
+plm_mh13_micro <- fenegbin(mental_health_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge[which(merge$Metro_Micro_Noncore_2013 == 0),])
+plm_mh13_noncore <- fenegbin(mental_health_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge[which(merge$Metro_Micro_Noncore_2013 == 1),])
+plm_mh13_metrocore <- fenegbin(mental_health_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge[which(merge$Metro_Micro_Noncore_2013 == 2),])
+
+
+plm_mh13_nonmetro_clust <- fenegbin(mental_health_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge[which(merge$Metro_Nonmetro_2013 == 0),], cluster = ~ residence_county + year)
+plm_mh13_metro_clust <- fenegbin(mental_health_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge[which(merge$Metro_Nonmetro_2013 == 1),], cluster = ~ residence_county + year)
+
+
+plm_mh13_micro_clust <- fenegbin(mental_health_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge[which(merge$Metro_Micro_Noncore_2013 == 0),], cluster = ~ residence_county + year)
+plm_mh13_noncore_clust <- fenegbin(mental_health_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge[which(merge$Metro_Micro_Noncore_2013 == 1),], cluster = ~ residence_county + year)
+plm_mh13_metrocore_clust <- fenegbin(mental_health_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge[which(merge$Metro_Micro_Noncore_2013 == 2),], cluster = ~ residence_county + year)
+
+
+
+print("Models stratified by metro status")
+print("Negative binomial models, no covariates. Year/county FE")
+print("Contemporaneous boom/bust w/30% threshold. DOES carry through")
+
+
+print("##########################################")
+print("All-nonmetro")
+summary(plm_mh13_nonmetro)
+print("All metro")
+summary(plm_mh13_metro)
+
+
+print("##########################################")
+print("Micro only")
+summary(plm_mh13_micro)
+print("Metro noncore")
+summary(plm_mh13_noncore)
+print("Metro core")
+summary(plm_mh13_metrocore)
+
+
+print("Rurality models - Micro")
+plm_mh13_micro_out <- cbind(Estimate = coef(plm_mh13_micro), confint(plm_mh13_micro)[-3,])
+plm_mh13_micro_irr <- exp(plm_mh13_micro_out)
+plm_mh13_micro_irr
+
+print("Rurality models - Noncore")
+plm_mh13_noncore_out <- cbind(Estimate = coef(plm_mh13_noncore), confint(plm_mh13_noncore)[-3,])
+plm_mh13_noncore_irr <- exp(plm_mh13_noncore_out)
+plm_mh13_noncore_irr
+
+
+print("Rurality models - Core")
+plm_mh13_metrocore_out <- cbind(Estimate = coef(plm_mh13_metrocore), confint(plm_mh13_metrocore)[-3,])
+plm_mh13_metrocore_irr <- exp(plm_mh13_metrocore_out)
+plm_mh13_metrocore_irr
+
+
+print("Models stratified by metro status")
+print("Negative binomial models, no covariates. Year/county FE")
+print("Contemporaneous boom/bust w/30% threshold. DOES carry through")
+
+
+print("##########################################")
+print("All-nonmetro")
+summary(plm_mh13_nonmetro_clust)
+print("All metro")
+summary(plm_mh13_metro_clust)
+
+
+print("##########################################")
+print("Micro only")
+summary(plm_mh13_micro_clust)
+print("Metro noncore")
+summary(plm_mh13_noncore_clust)
+print("Metro core")
+summary(plm_mh13_metrocore_clust)
+
+
+
+
+print("Rurality models - Micro")
+plm_mh13_micro_out <- cbind(Estimate = coef(plm_mh13_micro_clust), confint(plm_mh13_micro_clust)[-3,])
+plm_mh13_micro_irr <- exp(plm_mh13_micro_out)
+plm_mh13_micro_irr
+
+print("Rurality models - Noncore")
+plm_mh13_noncore_out <- cbind(Estimate = coef(plm_mh13_noncore_clust), confint(plm_mh13_noncore_clust)[-3,])
+plm_mh13_noncore_irr <- exp(plm_mh13_noncore_out)
+plm_mh13_noncore_irr
+
+
+print("Rurality models - Core")
+plm_mh13_metrocore_out <- cbind(Estimate = coef(plm_mh13_metrocore_clust), confint(plm_mh13_metrocore_clust)[-3,])
+plm_mh13_metrocore_irr <- exp(plm_mh13_metrocore_out)
+plm_mh13_metrocore_irr
+
+
+
+
+##### Set 13: Negative binomial models, no covariates. County/year FE. boom/bust threshold at 30%. Contemporaneous indicator w/carry through. Stratified by income ######
+
+merge_income$income_ntile <- dplyr::ntile(merge_income$median_household_income, 3)
+
+plm_mh13_income1 <- fenegbin(mental_health_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge_income[which(merge_income$income_ntile == 1),])
+plm_mh13_income2 <- fenegbin(mental_health_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge_income[which(merge_income$income_ntile == 2),])
+plm_mh13_income3 <- fenegbin(mental_health_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge_income[which(merge_income$income_ntile == 3),])
+
+
+
+plm_mh13_income1_clust <- fenegbin(mental_health_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge_income[which(merge_income$income_ntile == 1),], cluster = ~ residence_county + year)
+plm_mh13_income2_clust <- fenegbin(mental_health_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge_income[which(merge_income$income_ntile == 2),], cluster = ~ residence_county + year)
+plm_mh13_income3_clust <- fenegbin(mental_health_hospitalizations ~ boom_year30_2 + bust_year30_2 | residence_county + year, data = merge_income[which(merge_income$income_ntile == 3),], cluster = ~ residence_county + year)
+
+
+print("Models stratified by metro status")
+print("Negative binomial models, no covariates. Year/county FE")
+print("Contemporaneous boom/bust w/30% threshold. DOES carry through")
+
+print("First income tertile")
+summary(plm_mh13_income1)
+print("Second income tertile")
+summary(plm_mh13_income2)
+print("Third income tertile")
+summary(plm_mh13_income3)
+
+
+print("First income tertile")
+plm_mh13_income1_out <- cbind(Estimate = coef(plm_mh13_income1), confint(plm_mh13_income1)[-3,])
+plm_mh13_income1_irr <- exp(plm_mh13_income1_out)
+plm_mh13_income1_irr
+
+print("Second income tertile")
+plm_mh13_income2_out <- cbind(Estimate = coef(plm_mh13_income2), confint(plm_mh13_income2)[-3,])
+plm_mh13_income2_irr <- exp(plm_mh13_income2_out)
+plm_mh13_income2_irr
+
+print("Third income tertile")
+plm_mh13_income3_out <- cbind(Estimate = coef(plm_mh13_income3), confint(plm_mh13_income3)[-3,])
+plm_mh13_income3_irr <- exp(plm_mh13_income3_out)
+plm_mh13_income3_irr
+
+
+print("Models stratified by metro status")
+print("Negative binomial models, no covariates. Year/county FE")
+print("Contemporaneous boom/bust w/30% threshold. DOES carry through")
+
+print("First income tertile")
+summary(plm_mh13_income1_clust)
+print("Second income tertile")
+summary(plm_mh13_income2_clust)
+print("Third income tertile")
+summary(plm_mh13_income3_clust)
+
+
+print("First income tertile")
+plm_mh13_income1_out <- cbind(Estimate = coef(plm_mh13_income1_clust), confint(plm_mh13_income1_clust)[-3,])
+plm_mh13_income1_irr <- exp(plm_mh13_income1_out)
+plm_mh13_income1_irr
+
+print("Second income tertile")
+plm_mh13_income2_out <- cbind(Estimate = coef(plm_mh13_income2_clust), confint(plm_mh13_income2_clust)[-3,])
+plm_mh13_income2_irr <- exp(plm_mh13_income2_out)
+plm_mh13_income2_irr
+
+print("Third income tertile")
+plm_mh13_income3_out <- cbind(Estimate = coef(plm_mh13_income3_clust), confint(plm_mh13_income3_clust)[-3,])
+plm_mh13_income3_irr <- exp(plm_mh13_income3_out)
+plm_mh13_income3_irr
+
+
+
+
+
+#### SENSITIVITY ANALYSES - 10 PCT THRESHOLD ####
+
+##### Set 13: Negative binomial models, no covariates. County/year FE. boom/bust threshold at 10%. Contemporaneous indicator w/carry through #####
+
+
+plm_mh13 <- fenegbin(mental_health_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge)
+plm_adj13 <- fenegbin(adjustment_reaction_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge)
+plm_anx13 <- fenegbin(anxiety_disorders_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge)
+plm_att13 <- fenegbin(attention_disorders_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge)
+plm_mood13 <- fenegbin(mood_disorders_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge)
+plm_pers13 <- fenegbin(personality_disorders_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge)
+plm_schiz13 <- fenegbin(schizophrenia_psychotic_disorders_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge)
+plm_alc13 <- fenegbin(alcohol_disorders_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge)
+plm_sub13 <- fenegbin(substance_disorders_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge)
+plm_suic13 <- fenegbin(suicide_self_harm_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge)
+
+
+
+plm_mh13_clust <- fenegbin(mental_health_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge, cluster = ~ residence_county + year)
+plm_adj13_clust <- fenegbin(adjustment_reaction_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge, cluster = ~ residence_county + year)
+plm_anx13_clust <- fenegbin(anxiety_disorders_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge, cluster = ~ residence_county + year)
+plm_att13_clust <- fenegbin(attention_disorders_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge, cluster = ~ residence_county + year)
+plm_mood13_clust <- fenegbin(mood_disorders_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge, cluster = ~ residence_county + year)
+plm_pers13_clust <- fenegbin(personality_disorders_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge, cluster = ~ residence_county + year)
+plm_schiz13_clust <- fenegbin(schizophrenia_psychotic_disorders_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge, cluster = ~ residence_county + year)
+plm_alc13_clust <- fenegbin(alcohol_disorders_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge, cluster = ~ residence_county + year)
+plm_sub13_clust <- fenegbin(substance_disorders_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge, cluster = ~ residence_county + year)
+plm_suic13_clust <- fenegbin(suicide_self_harm_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge, cluster = ~ residence_county + year)
+
+
+
+print("Negative binomial models with county and year fixed effects. No covariates")
+print("Uses contemporaneous boom/bust indicator, carried through, with 10% threshold")
+print("")
+
+print("All mental health hospitalizations")
+summary(plm_mh13)
+
+print("Adjustment disorder")
+summary(plm_adj13)
+
+print("Anxiety disorder")
+summary(plm_anx13)
+
+print("Attention disorder")
+summary(plm_att13)
+
+print("Mood disorder")
+summary(plm_mood13)
+
+print("Personality disorder")
+summary(plm_pers13)
+
+print("Schizophrenia")
+summary(plm_schiz13)
+
+print("Alcohol use disorder")
+summary(plm_alc13)
+
+print("Substance use disorder")
+summary(plm_sub13)
+
+print("Suicide/self-harm")
+summary(plm_suic13)
+
+
+
+print("Negative binomial models with county and year fixed effects. No covariates")
+print("Uses contemporaneous boom/bust indicator, carried through, with 10% threshold")
+print("")
+
+print("All mental health hospitalizations")
+summary(plm_mh13_clust)
+
+print("Adjustment disorder")
+summary(plm_adj13_clust)
+
+print("Anxiety disorder")
+summary(plm_anx13_clust)
+
+print("Attention disorder")
+summary(plm_att13_clust)
+
+print("Mood disorder")
+summary(plm_mood13_clust)
+
+print("Personality disorder")
+summary(plm_pers13_clust)
+
+print("Schizophrenia")
+summary(plm_schiz13_clust)
+
+print("Alcohol use disorder")
+summary(plm_alc13_clust)
+
+print("Substance use disorder")
+summary(plm_sub13_clust)
+
+print("Suicide/self-harm")
+summary(plm_suic13_clust)
+
+
+print("Mental health hospitalizations")
+
+plm_mh13_out <- cbind(Estimate = coef(plm_mh13), stats::confint(plm_mh13)[-3,])
+plm_mh13_irr <- exp(plm_mh13_out)
+plm_mh13_irr
+
+print("Adjustment disorder")
+plm_adj13_out <- cbind(Estimate = coef(plm_adj13), confint(plm_adj13)[-3,])
+plm_adj13_irr <- exp(plm_adj13_out)
+plm_adj13_irr
+
+print("Anxiety disorder")
+plm_anx13_out <- cbind(Estimate = coef(plm_anx13), confint(plm_anx13)[-3,])
+plm_anx13_irr <- exp(plm_anx13_out)
+plm_anx13_irr
+
+
+print("Attention disorder")
+plm_att13_out <- cbind(Estimate = coef(plm_att13), confint(plm_att13)[-3,])
+plm_att13_irr <- exp(plm_att13_out)
+plm_att13_irr
+
+
+print("Mood disorder")
+plm_mood13_out <- cbind(Estimate = coef(plm_mood13), confint(plm_mood13)[-3,])
+plm_mood13_irr <- exp(plm_mood13_out)
+plm_mood13_irr
+
+print("Personality disorder")
+plm_pers13_out <- cbind(Estimate = coef(plm_pers13), confint(plm_pers13)[-3,])
+plm_pers13_irr <- exp(plm_pers13_out)
+plm_pers13_irr
+
+print("Schizophrenia")
+plm_schiz13_out <- cbind(Estimate = coef(plm_schiz13), confint(plm_schiz13)[-3,])
+plm_schiz13_irr <- exp(plm_schiz13_out)
+plm_schiz13_irr
+
+print("Alcohol use disorder")
+plm_alc13_out <- cbind(Estimate = coef(plm_alc13), confint(plm_alc13)[-3,])
+plm_alc13_irr <- exp(plm_alc13_out)
+plm_alc13_irr
+
+
+print("Substance use disorder")
+plm_sub13_out <- cbind(Estimate = coef(plm_sub13), confint(plm_sub13)[-3,])
+plm_sub13_irr <- exp(plm_sub13_out)
+plm_sub13_irr
+
+
+print("Suicide/self-harm")
+plm_suic13_out <- cbind(Estimate = coef(plm_suic13), confint(plm_suic13)[-3,])
+plm_suic13_irr <- exp(plm_suic13_out)
+plm_suic13_irr
+
+
+print("Mental health hospitalizations")
+
+plm_mh13_out <- cbind(Estimate = coef(plm_mh13_clust), stats::confint(plm_mh13_clust)[-3,])
+plm_mh13_irr <- exp(plm_mh13_out)
+plm_mh13_irr
+
+print("Adjustment disorder")
+plm_adj13_out <- cbind(Estimate = coef(plm_adj13_clust), confint(plm_adj13_clust)[-3,])
+plm_adj13_irr <- exp(plm_adj13_out)
+plm_adj13_irr
+
+print("Anxiety disorder")
+plm_anx13_out <- cbind(Estimate = coef(plm_anx13_clust), confint(plm_anx13_clust)[-3,])
+plm_anx13_irr <- exp(plm_anx13_out)
+plm_anx13_irr
+
+
+print("Attention disorder")
+plm_att13_out <- cbind(Estimate = coef(plm_att13_clust), confint(plm_att13_clust)[-3,])
+plm_att13_irr <- exp(plm_att13_out)
+plm_att13_irr
+
+
+print("Mood disorder")
+plm_mood13_out <- cbind(Estimate = coef(plm_mood13_clust), confint(plm_mood13_clust)[-3,])
+plm_mood13_irr <- exp(plm_mood13_out)
+plm_mood13_irr
+
+print("Personality disorder")
+plm_pers13_out <- cbind(Estimate = coef(plm_pers13_clust), confint(plm_pers13_clust)[-3,])
+plm_pers13_irr <- exp(plm_pers13_out)
+plm_pers13_irr
+
+print("Schizophrenia")
+plm_schiz13_out <- cbind(Estimate = coef(plm_schiz13_clust), confint(plm_schiz13_clust)[-3,])
+plm_schiz13_irr <- exp(plm_schiz13_out)
+plm_schiz13_irr
+
+print("Alcohol use disorder")
+plm_alc13_out <- cbind(Estimate = coef(plm_alc13_clust), confint(plm_alc13_clust)[-3,])
+plm_alc13_irr <- exp(plm_alc13_out)
+plm_alc13_irr
+
+
+print("Substance use disorder")
+plm_sub13_out <- cbind(Estimate = coef(plm_sub13_clust), confint(plm_sub13_clust)[-3,])
+plm_sub13_irr <- exp(plm_sub13_out)
+plm_sub13_irr
+
+
+print("Suicide/self-harm")
+plm_suic13_out <- cbind(Estimate = coef(plm_suic13_clust), confint(plm_suic13_clust)[-3,])
+plm_suic13_irr <- exp(plm_suic13_out)
+plm_suic13_irr
+
+
+
+
+
+##### Set 13: Negative binomial models, no covariates. County/year FE. boom/bust threshold at 10%. Contemporaneous indicator w/carry through. Stratified by demographics ########
+
+
+
+#1: Non-Hispanic White
+#2: Black (or African-American)
+#4: Asian/Pacific Islander
+#5/7: Hispanic
+
+files_new_female <- vector(mode='list', length=12)
+files_new_male <- vector(mode='list', length=12)
+
+files_new_white <- vector(mode='list', length=12)
+files_new_black <- vector(mode='list', length=12)
+files_new_latine <- vector(mode='list', length=12)
+
+files_new_19to44 <- vector(mode='list', length=12)
+files_new_45to64 <- vector(mode='list', length=12)
+files_new_65plus <- vector(mode='list', length=12)
+
+
+
+years <- c(2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011)
+
+
+for(i in 1:length(years)){
+  file <- files[[i]]
+  file <- file[which(file$age_group != "0-18"),]
+  file$residence_county <- as.character(file$residence_county)
+  
+  file_new_female <- file[which(file$sex == "F"),] %>% dplyr::select(-contains(c("year","month","state","sex","race","age_group"))) %>% dplyr::group_by(residence_county) %>% summarize_all(.funs = c(sum), na.rm = TRUE)
+  file_new_female$year <- years[i]
+  files_new_female[[i]] <- file_new_female
+  
+  file_new_male <- file[which(file$sex == "M"),] %>% dplyr::select(-contains(c("year","month","state","sex","race","age_group"))) %>% dplyr::group_by(residence_county) %>% summarize_all(.funs = c(sum), na.rm = TRUE)
+  file_new_male$year <- years[i]
+  files_new_male[[i]] <- file_new_male
+  
+  file_new_white <- file[which(file$race == 1),] %>% dplyr::select(-contains(c("year","month","state","sex","race","age_group"))) %>% dplyr::group_by(residence_county) %>% summarize_all(.funs = c(sum), na.rm = TRUE)
+  file_new_white$year <- years[i]
+  files_new_white[[i]] <- file_new_white
+  
+  file_new_black <- file[which(file$race == 2),] %>% dplyr::select(-contains(c("year","month","state","sex","race","age_group"))) %>% dplyr::group_by(residence_county) %>% summarize_all(.funs = c(sum), na.rm = TRUE)
+  file_new_black$year <- years[i]
+  files_new_black[[i]] <- file_new_black
+  
+  file_new_latine <- file[which(file$race == 5 | file$race == 7),] %>% dplyr::select(-contains(c("year","month","state","sex","race","age_group"))) %>% dplyr::group_by(residence_county) %>% summarize_all(.funs = c(sum), na.rm = TRUE)
+  file_new_latine$year <- years[i]
+  files_new_latine[[i]] <- file_new_latine
+  
+  
+  file_new_19to44 <- file[which(file$age_group == "19-24" | file$age_group == "10-34" | file$age_group == "35-44"),] %>% dplyr::select(-contains(c("year","month","state","sex","race","age_group"))) %>% dplyr::group_by(residence_county) %>% summarize_all(.funs = c(sum), na.rm = TRUE)
+  file_new_19to44$year <- years[i]
+  files_new_19to44[[i]] <- file_new_19to44
+  
+  file_new_45to64 <- file[which(file$age_group == "45-54" | file$age_group == "55-64"),] %>% dplyr::select(-contains(c("year","month","state","sex","race","age_group"))) %>% dplyr::group_by(residence_county) %>% summarize_all(.funs = c(sum), na.rm = TRUE)
+  file_new_45to64$year <- years[i]
+  files_new_45to64[[i]] <- file_new_45to64
+  
+  file_new_65plus <- file[which(file$age_group == "65-74" | file$age_group == "75-84" | file$age_group == "85+"),] %>% dplyr::select(-contains(c("year","month","state","sex","race","age_group"))) %>% dplyr::group_by(residence_county) %>% summarize_all(.funs = c(sum), na.rm = TRUE)
+  file_new_65plus$year <- years[i]
+  files_new_65plus[[i]] <- file_new_65plus
+  
+  
+  print(i)
+}
+
+
+files_new_female_df <- rbind(files_new_female[[1]],
+                             files_new_female[[2]],
+                             files_new_female[[3]],
+                             files_new_female[[4]],
+                             files_new_female[[5]],
+                             files_new_female[[6]],
+                             files_new_female[[7]],
+                             files_new_female[[8]],
+                             files_new_female[[9]],
+                             files_new_female[[10]],
+                             files_new_female[[11]],
+                             files_new_female[[12]])
+files_new_female_df$residence_county <- unlist(lapply(files_new_female_df$residence_county, function(x) county_fips_fix(as.character(x))))
+
+
+files_new_male_df <- rbind(files_new_male[[1]],
+                           files_new_male[[2]],
+                           files_new_male[[3]],
+                           files_new_male[[4]],
+                           files_new_male[[5]],
+                           files_new_male[[6]],
+                           files_new_male[[7]],
+                           files_new_male[[8]],
+                           files_new_male[[9]],
+                           files_new_male[[10]],
+                           files_new_male[[11]],
+                           files_new_male[[12]])
+files_new_male_df$residence_county <- unlist(lapply(files_new_male_df$residence_county, function(x) county_fips_fix(as.character(x))))
+
+
+files_new_white_df <- rbind(files_new_white[[1]],
+                            files_new_white[[2]],
+                            files_new_white[[3]],
+                            files_new_white[[4]],
+                            files_new_white[[5]],
+                            files_new_white[[6]],
+                            files_new_white[[7]],
+                            files_new_white[[8]],
+                            files_new_white[[9]],
+                            files_new_white[[10]],
+                            files_new_white[[11]],
+                            files_new_white[[12]])
+files_new_white_df$residence_county <- unlist(lapply(files_new_white_df$residence_county, function(x) county_fips_fix(as.character(x))))
+
+
+files_new_black_df <- rbind(files_new_black[[1]],
+                            files_new_black[[2]],
+                            files_new_black[[3]],
+                            files_new_black[[4]],
+                            files_new_black[[5]],
+                            files_new_black[[6]],
+                            files_new_black[[7]],
+                            files_new_black[[8]],
+                            files_new_black[[9]],
+                            files_new_black[[10]],
+                            files_new_black[[11]],
+                            files_new_black[[12]])
+files_new_black_df$residence_county <- unlist(lapply(files_new_black_df$residence_county, function(x) county_fips_fix(as.character(x))))
+
+
+files_new_latine_df <- rbind(files_new_latine[[1]],
+                             files_new_latine[[2]],
+                             files_new_latine[[3]],
+                             files_new_latine[[4]],
+                             files_new_latine[[5]],
+                             files_new_latine[[6]],
+                             files_new_latine[[7]],
+                             files_new_latine[[8]],
+                             files_new_latine[[9]],
+                             files_new_latine[[10]],
+                             files_new_latine[[11]],
+                             files_new_latine[[12]])
+files_new_latine_df$residence_county <- unlist(lapply(files_new_latine_df$residence_county, function(x) county_fips_fix(as.character(x))))
+
+
+files_new_19to44_df <- rbind(files_new_19to44[[1]],
+                             files_new_19to44[[2]],
+                             files_new_19to44[[3]],
+                             files_new_19to44[[4]],
+                             files_new_19to44[[5]],
+                             files_new_19to44[[6]],
+                             files_new_19to44[[7]],
+                             files_new_19to44[[8]],
+                             files_new_19to44[[9]],
+                             files_new_19to44[[10]],
+                             files_new_19to44[[11]],
+                             files_new_19to44[[12]])
+files_new_19to44_df$residence_county <- unlist(lapply(files_new_19to44_df$residence_county, function(x) county_fips_fix(as.character(x))))
+
+
+files_new_45to64_df <- rbind(files_new_45to64[[1]],
+                             files_new_45to64[[2]],
+                             files_new_45to64[[3]],
+                             files_new_45to64[[4]],
+                             files_new_45to64[[5]],
+                             files_new_45to64[[6]],
+                             files_new_45to64[[7]],
+                             files_new_45to64[[8]],
+                             files_new_45to64[[9]],
+                             files_new_45to64[[10]],
+                             files_new_45to64[[11]],
+                             files_new_45to64[[12]])
+files_new_45to64_df$residence_county <- unlist(lapply(files_new_45to64_df$residence_county, function(x) county_fips_fix(as.character(x))))
+
+
+files_new_65plus_df <- rbind(files_new_65plus[[1]],
+                             files_new_65plus[[2]],
+                             files_new_65plus[[3]],
+                             files_new_65plus[[4]],
+                             files_new_65plus[[5]],
+                             files_new_65plus[[6]],
+                             files_new_65plus[[7]],
+                             files_new_65plus[[8]],
+                             files_new_65plus[[9]],
+                             files_new_65plus[[10]],
+                             files_new_65plus[[11]],
+                             files_new_65plus[[12]])
+
+files_new_65plus_df$residence_county <- unlist(lapply(files_new_65plus_df$residence_county, function(x) county_fips_fix(as.character(x))))
+
+
+merge_white <- merge(files_new_white_df, dat, by = c("residence_county", "year"))
+merge_black <- merge(files_new_black_df, dat, by = c("residence_county", "year"))
+merge_latine <- merge(files_new_latine_df, dat, by = c("residence_county", "year"))
+merge_female <- merge(files_new_female_df, dat, by = c("residence_county", "year"))
+merge_male <- merge(files_new_male_df, dat, by = c("residence_county", "year"))
+merge_19to44 <- merge(files_new_19to44_df, dat, by = c("residence_county", "year"))
+merge_45to64 <- merge(files_new_45to64_df, dat, by = c("residence_county", "year"))
+merge_65plus <- merge(files_new_65plus_df, dat, by = c("residence_county", "year"))
+
+merge_white$state_fips_complete <- substr(merge_white$residence_county, 1,2)
+merge_black$state_fips_complete <- substr(merge_black$residence_county, 1,2)
+merge_latine$state_fips_complete <- substr(merge_latine$residence_county, 1,2)
+merge_male$state_fips_complete <- substr(merge_male$residence_county, 1,2)
+merge_female$state_fips_complete <- substr(merge_female$residence_county, 1,2)
+merge_19to44$state_fips_complete <- substr(merge_19to44$residence_county, 1,2)
+merge_45to64$state_fips_complete <- substr(merge_45to64$residence_county, 1,2)
+merge_65plus$state_fips_complete <- substr(merge_65plus$residence_county, 1,2)
+
+
+## state names from above
+merge_white <- merge(merge_white, state_names[,c("state_fips_complete","State.Abbreviation")], by = "state_fips_complete", all = TRUE) # 38299 x 80
+merge_black <- merge(merge_black, state_names[,c("state_fips_complete","State.Abbreviation")], by = "state_fips_complete", all = TRUE) # 38299 x 80
+merge_latine <- merge(merge_latine, state_names[,c("state_fips_complete","State.Abbreviation")], by = "state_fips_complete", all = TRUE) # 38299 x 80
+merge_male <- merge(merge_male, state_names[,c("state_fips_complete","State.Abbreviation")], by = "state_fips_complete", all = TRUE) # 38299 x 80
+merge_female <- merge(merge_female, state_names[,c("state_fips_complete","State.Abbreviation")], by = "state_fips_complete", all = TRUE) # 38299 x 80
+merge_19to44 <- merge(merge_19to44, state_names[,c("state_fips_complete","State.Abbreviation")], by = "state_fips_complete", all = TRUE) # 38299 x 80
+merge_45to64 <- merge(merge_45to64, state_names[,c("state_fips_complete","State.Abbreviation")], by = "state_fips_complete", all = TRUE) # 38299 x 80
+merge_65plus <- merge(merge_65plus, state_names[,c("state_fips_complete","State.Abbreviation")], by = "state_fips_complete", all = TRUE) # 38299 x 80
+
+
+
+
+## objects states_to_remove and counties_zero created above
+merge_white <- merge_white[-which(merge_white$State.Abbreviation %in% states_to_remove),]
+merge_white <- merge_white[-which(merge_white$residence_county %in% counties_zero),]
+
+merge_black <- merge_black[-which(merge_black$State.Abbreviation %in% states_to_remove),]
+merge_black <- merge_black[-which(merge_black$residence_county %in% counties_zero),]
+
+merge_latine <- merge_latine[-which(merge_latine$State.Abbreviation %in% states_to_remove),]
+merge_latine <- merge_latine[-which(merge_latine$residence_county %in% counties_zero),]
+
+merge_female <- merge_female[-which(merge_female$State.Abbreviation %in% states_to_remove),]
+merge_female <- merge_female[-which(merge_female$residence_county %in% counties_zero),]
+
+merge_male <- merge_male[-which(merge_male$State.Abbreviation %in% states_to_remove),]
+merge_male <- merge_male[-which(merge_male$residence_county %in% counties_zero),]
+
+merge_19to44 <- merge_19to44[-which(merge_19to44$State.Abbreviation %in% states_to_remove),]
+merge_19to44 <- merge_19to44[-which(merge_19to44$residence_county %in% counties_zero),]
+
+merge_45to64 <- merge_45to64[-which(merge_45to64$State.Abbreviation %in% states_to_remove),]
+merge_45to64 <- merge_45to64[-which(merge_45to64$residence_county %in% counties_zero),]
+
+merge_65plus <- merge_65plus[-which(merge_65plus$State.Abbreviation %in% states_to_remove),]
+merge_65plus <- merge_65plus[-which(merge_65plus$residence_county %in% counties_zero),]
+
+
+
+
+## models - MH only - stratified 
+
+plm_mh13_white <- fenegbin(mental_health_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge_white)
+plm_mh13_black <- fenegbin(mental_health_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge_black)
+plm_mh13_latine <- fenegbin(mental_health_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge_latine)
+plm_mh13_male <- fenegbin(mental_health_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge_male)
+plm_mh13_female <- fenegbin(mental_health_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge_female)
+plm_mh13_19to44 <- fenegbin(mental_health_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge_19to44)
+plm_mh13_45to64 <- fenegbin(mental_health_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge_45to64)
+plm_mh13_65plus <- fenegbin(mental_health_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge_65plus)
+
+plm_mh13_white_clust <- fenegbin(mental_health_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge_white, cluster = ~residence_county + year)
+plm_mh13_black_clust <- fenegbin(mental_health_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge_black, cluster = ~residence_county + year)
+plm_mh13_latine_clust <- fenegbin(mental_health_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge_latine, cluster = ~residence_county + year)
+plm_mh13_male_clust <- fenegbin(mental_health_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge_male, cluster = ~residence_county + year)
+plm_mh13_female_clust <- fenegbin(mental_health_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge_female, cluster = ~residence_county + year)
+plm_mh13_19to44_clust <- fenegbin(mental_health_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge_19to44, cluster = ~residence_county + year)
+plm_mh13_45to64_clust <- fenegbin(mental_health_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge_45to64, cluster = ~residence_county + year)
+plm_mh13_65plus_clust <- fenegbin(mental_health_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge_65plus, cluster = ~residence_county + year)
+
+
+
+print("Mental health hospitalizations: White beneficiaries")
+summary(plm_mh13_white)
+
+print("Mental health hospitalizations: Black beneficiaries")
+summary(plm_mh13_black)
+
+print("Mental health hospitalizations: Latine beneficiaries")
+summary(plm_mh13_latine)
+
+print("Mental health hospitalizations: Male beneficiaries")
+summary(plm_mh13_male)
+
+print("Mental health hospitalizations: Female beneficiaries")
+summary(plm_mh13_female)
+
+print("Mental health hospitalizations: Age 19 to 44 beneficiaries")
+summary(plm_mh13_19to44)
+
+print("Mental health hospitalizations: Age 45 to 64 beneficiaries")
+summary(plm_mh13_45to64)
+
+print("Mental health hospitalizations: Age 65 plus beneficiaries")
+summary(plm_mh13_65plus)
+
+
+print("Mental health hospitalizations: White beneficiaries")
+plm_mh13_white_out <- cbind(Estimate = coef(plm_mh13_white), confint(plm_mh13_white)[-3,])
+plm_mh13_white_irr <- exp(plm_mh13_white_out)
+plm_mh13_white_irr
+
+
+print("Mental health hospitalizations: Black beneficiaries")
+plm_mh13_black_out <- cbind(Estimate = coef(plm_mh13_black), confint(plm_mh13_black)[-3,])
+plm_mh13_black_irr <- exp(plm_mh13_black_out)
+plm_mh13_black_irr
+
+
+print("Mental health hospitalizations: Latine beneficiaries")
+plm_mh13_latine_out <- cbind(Estimate = coef(plm_mh13_latine), confint(plm_mh13_latine)[-3,])
+plm_mh13_latine_irr <- exp(plm_mh13_latine_out)
+plm_mh13_latine_irr
+
+
+print("Mental health hospitalizations: Male beneficiaries")
+plm_mh13_male_out <- cbind(Estimate = coef(plm_mh13_male), confint(plm_mh13_male)[-3,])
+plm_mh13_male_irr <- exp(plm_mh13_male_out)
+plm_mh13_male_irr
+
+
+print("Mental health hospitalizations: Female beneficiaries")
+plm_mh13_female_out <- cbind(Estimate = coef(plm_mh13_female), confint(plm_mh13_female)[-3,])
+plm_mh13_female_irr <- exp(plm_mh13_female_out)
+plm_mh13_female_irr
+
+
+print("Mental health hospitalizations: Age 19 to 44 beneficiaries")
+plm_mh13_19to44_out <- cbind(Estimate = coef(plm_mh13_19to44), confint(plm_mh13_19to44)[-3,])
+plm_mh13_19to44_irr <- exp(plm_mh13_19to44_out)
+plm_mh13_19to44_irr
+
+
+print("Mental health hospitalizations: Age 45 to 64 beneficiaries")
+plm_mh13_45to64_out <- cbind(Estimate = coef(plm_mh13_45to64), confint(plm_mh13_45to64)[-3,])
+plm_mh13_45to64_irr <- exp(plm_mh13_45to64_out)
+plm_mh13_45to64_irr
+
+print("Mental health hospitalizations: Age 65 plus beneficiaries")
+plm_mh13_65plus_out <- cbind(Estimate = coef(plm_mh13_65plus), confint(plm_mh13_65plus)[-3,])
+plm_mh13_65plus_irr <- exp(plm_mh13_65plus_out)
+plm_mh13_65plus_irr
+
+
+print("Mental health hospitalizations: White beneficiaries")
+summary(plm_mh13_white_clust)
+
+print("Mental health hospitalizations: Black beneficiaries")
+summary(plm_mh13_black_clust)
+
+print("Mental health hospitalizations: Latine beneficiaries")
+summary(plm_mh13_latine_clust)
+
+print("Mental health hospitalizations: Male beneficiaries")
+summary(plm_mh13_male_clust)
+
+print("Mental health hospitalizations: Female beneficiaries")
+summary(plm_mh13_female_clust)
+
+print("Mental health hospitalizations: Age 19 to 44 beneficiaries")
+summary(plm_mh13_19to44_clust)
+
+print("Mental health hospitalizations: Age 45 to 64 beneficiaries")
+summary(plm_mh13_45to64_clust)
+
+print("Mental health hospitalizations: Age 65 plus beneficiaries")
+summary(plm_mh13_65plus_clust)
+
+
+
+print("Mental health hospitalizations: White beneficiaries")
+plm_mh13_white_out <- cbind(Estimate = coef(plm_mh13_white_clust), confint(plm_mh13_white_clust)[-3,])
+plm_mh13_white_irr <- exp(plm_mh13_white_out)
+plm_mh13_white_irr
+
+
+print("Mental health hospitalizations: Black beneficiaries")
+plm_mh13_black_out <- cbind(Estimate = coef(plm_mh13_black_clust), confint(plm_mh13_black_clust)[-3,])
+plm_mh13_black_irr <- exp(plm_mh13_black_out)
+plm_mh13_black_irr
+
+
+print("Mental health hospitalizations: Latine beneficiaries")
+plm_mh13_latine_out <- cbind(Estimate = coef(plm_mh13_latine_clust), confint(plm_mh13_latine_clust)[-3,])
+plm_mh13_latine_irr <- exp(plm_mh13_latine_out)
+plm_mh13_latine_irr
+
+
+print("Mental health hospitalizations: Male beneficiaries")
+plm_mh13_male_out <- cbind(Estimate = coef(plm_mh13_male_clust), confint(plm_mh13_male_clust)[-3,])
+plm_mh13_male_irr <- exp(plm_mh13_male_out)
+plm_mh13_male_irr
+
+
+print("Mental health hospitalizations: Female beneficiaries")
+plm_mh13_female_out <- cbind(Estimate = coef(plm_mh13_female_clust), confint(plm_mh13_female_clust)[-3,])
+plm_mh13_female_irr <- exp(plm_mh13_female_out)
+plm_mh13_female_irr
+
+
+print("Mental health hospitalizations: Age 19 to 44 beneficiaries")
+plm_mh13_19to44_out <- cbind(Estimate = coef(plm_mh13_19to44_clust), confint(plm_mh13_19to44_clust)[-3,])
+plm_mh13_19to44_irr <- exp(plm_mh13_19to44_out)
+plm_mh13_19to44_irr
+
+
+print("Mental health hospitalizations: Age 45 to 64 beneficiaries")
+plm_mh13_45to64_out <- cbind(Estimate = coef(plm_mh13_45to64_clust), confint(plm_mh13_45to64_clust)[-3,])
+plm_mh13_45to64_irr <- exp(plm_mh13_45to64_out)
+plm_mh13_45to64_irr
+
+print("Mental health hospitalizations: Age 65 plus beneficiaries")
+plm_mh13_65plus_out <- cbind(Estimate = coef(plm_mh13_65plus_clust), confint(plm_mh13_65plus_clust)[-3,])
+plm_mh13_65plus_irr <- exp(plm_mh13_65plus_out)
+plm_mh13_65plus_irr
+
+
+
+
+##### Set 13: Negative binomial models, no covariates. County/year FE. boom/bust threshold at 10%. Contemporaneous indicator w/carry through. Stratified by urban/rural ######
+
+#0 = micro
+#1 = noncore
+#2 = metro
+
+#Metro_Nonmetro_2013
+#0 = nonmetro
+#1 = metro
+
+plm_mh13_nonmetro <- fenegbin(mental_health_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge[which(merge$Metro_Nonmetro_2013 == 0),])
+plm_mh13_metro <- fenegbin(mental_health_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge[which(merge$Metro_Nonmetro_2013 == 1),])
+
+
+plm_mh13_micro <- fenegbin(mental_health_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge[which(merge$Metro_Micro_Noncore_2013 == 0),])
+plm_mh13_noncore <- fenegbin(mental_health_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge[which(merge$Metro_Micro_Noncore_2013 == 1),])
+plm_mh13_metrocore <- fenegbin(mental_health_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge[which(merge$Metro_Micro_Noncore_2013 == 2),])
+
+
+plm_mh13_nonmetro_clust <- fenegbin(mental_health_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge[which(merge$Metro_Nonmetro_2013 == 0),], cluster = ~ residence_county + year)
+plm_mh13_metro_clust <- fenegbin(mental_health_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge[which(merge$Metro_Nonmetro_2013 == 1),], cluster = ~ residence_county + year)
+
+
+plm_mh13_micro_clust <- fenegbin(mental_health_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge[which(merge$Metro_Micro_Noncore_2013 == 0),], cluster = ~ residence_county + year)
+plm_mh13_noncore_clust <- fenegbin(mental_health_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge[which(merge$Metro_Micro_Noncore_2013 == 1),], cluster = ~ residence_county + year)
+plm_mh13_metrocore_clust <- fenegbin(mental_health_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge[which(merge$Metro_Micro_Noncore_2013 == 2),], cluster = ~ residence_county + year)
+
+
+print("Models stratified by metro status")
+print("Negative binomial models, no covariates. Year/county FE")
+print("Contemporaneous boom/bust w/10% threshold. DOES carry through")
+
+
+print("##########################################")
+print("All-nonmetro")
+summary(plm_mh13_nonmetro)
+print("All metro")
+summary(plm_mh13_metro)
+
+
+print("##########################################")
+print("Micro only")
+summary(plm_mh13_micro)
+print("Metro noncore")
+summary(plm_mh13_noncore)
+print("Metro core")
+summary(plm_mh13_metrocore)
+
+
+                                                      
+print("Rurality models - Micro")
+plm_mh13_micro_out <- cbind(Estimate = coef(plm_mh13_micro), confint(plm_mh13_micro)[-3,])
+plm_mh13_micro_irr <- exp(plm_mh13_micro_out)
+plm_mh13_micro_irr
+
+print("Rurality models - Noncore")
+plm_mh13_noncore_out <- cbind(Estimate = coef(plm_mh13_noncore), confint(plm_mh13_noncore)[-3,])
+plm_mh13_noncore_irr <- exp(plm_mh13_noncore_out)
+plm_mh13_noncore_irr
+
+
+print("Rurality models - Core")
+plm_mh13_metrocore_out <- cbind(Estimate = coef(plm_mh13_metrocore), confint(plm_mh13_metrocore)[-3,])
+plm_mh13_metrocore_irr <- exp(plm_mh13_metrocore_out)
+plm_mh13_metrocore_irr
+
+
+
+print("Models stratified by metro status")
+print("Negative binomial models, no covariates. Year/county FE")
+print("Contemporaneous boom/bust w/10% threshold. DOES carry through")
+
+
+print("##########################################")
+print("All-nonmetro")
+summary(plm_mh13_nonmetro_clust)
+print("All metro")
+summary(plm_mh13_metro_clust)
+
+
+print("##########################################")
+print("Micro only")
+summary(plm_mh13_micro_clust)
+print("Metro noncore")
+summary(plm_mh13_noncore_clust)
+print("Metro core")
+summary(plm_mh13_metrocore_clust)
+
+
+
+
+print("Rurality models - Micro")
+plm_mh13_micro_out <- cbind(Estimate = coef(plm_mh13_micro_clust), confint(plm_mh13_micro_clust)[-3,])
+plm_mh13_micro_irr <- exp(plm_mh13_micro_out)
+plm_mh13_micro_irr
+
+print("Rurality models - Noncore")
+plm_mh13_noncore_out <- cbind(Estimate = coef(plm_mh13_noncore_clust), confint(plm_mh13_noncore_clust)[-3,])
+plm_mh13_noncore_irr <- exp(plm_mh13_noncore_out)
+plm_mh13_noncore_irr
+
+
+print("Rurality models - Core")
+plm_mh13_metrocore_out <- cbind(Estimate = coef(plm_mh13_metrocore_clust), confint(plm_mh13_metrocore_clust)[-3,])
+plm_mh13_metrocore_irr <- exp(plm_mh13_metrocore_out)
+plm_mh13_metrocore_irr
+
+
+
+
+## N values 
+merge_micro <- merge[which(merge$Metro_Micro_Noncore_2013 == 0),]
+merge_noncore <- merge[which(merge$Metro_Micro_Noncore_2013 == 1),]
+merge_metro <- merge[which(merge$Metro_Micro_Noncore_2013 == 2),]
+
+ntable(plm_mh13_micro, merge_micro)
+ntable(plm_mh13_noncore, merge_noncore)
+ntable(plm_mh13_metrocore, merge_metro)
+
+
+
+##### Set 13: Negative binomial models, no covariates. County/year FE. boom/bust threshold at 10%. Contemporaneous indicator w/carry through. Stratified by income ######
+
+
+
+plm_mh13_income1 <- fenegbin(mental_health_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge_income[which(merge_income$income_ntile == 1),])
+plm_mh13_income2 <- fenegbin(mental_health_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge_income[which(merge_income$income_ntile == 2),])
+plm_mh13_income3 <- fenegbin(mental_health_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge_income[which(merge_income$income_ntile == 3),])
+
+
+
+plm_mh13_income1_clust <- fenegbin(mental_health_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge_income[which(merge_income$income_ntile == 1),], cluster = ~ residence_county + year)
+plm_mh13_income2_clust <- fenegbin(mental_health_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge_income[which(merge_income$income_ntile == 2),], cluster = ~ residence_county + year)
+plm_mh13_income3_clust <- fenegbin(mental_health_hospitalizations ~ boom_year2 + bust_year2 | residence_county + year, data = merge_income[which(merge_income$income_ntile == 3),], cluster = ~ residence_county + year)
+
+
+
+
+print("Models stratified by metro status")
+print("Negative binomial models, no covariates. Year/county FE")
+print("Contemporaneous boom/bust w/10% threshold. DOES carry through")
+
+print("First income tertile")
+summary(plm_mh13_income1)
+print("Second income tertile")
+summary(plm_mh13_income2)
+print("Third income tertile")
+summary(plm_mh13_income3)
+
+
+
+
+print("First income tertile")
+plm_mh13_income1_out <- cbind(Estimate = coef(plm_mh13_income1), confint(plm_mh13_income1)[-3,])
+plm_mh13_income1_irr <- exp(plm_mh13_income1_out)
+plm_mh13_income1_irr
+
+print("Second income tertile")
+plm_mh13_income2_out <- cbind(Estimate = coef(plm_mh13_income2), confint(plm_mh13_income2)[-3,])
+plm_mh13_income2_irr <- exp(plm_mh13_income2_out)
+plm_mh13_income2_irr
+
+print("Third income tertile")
+plm_mh13_income3_out <- cbind(Estimate = coef(plm_mh13_income3), confint(plm_mh13_income3)[-3,])
+plm_mh13_income3_irr <- exp(plm_mh13_income3_out)
+plm_mh13_income3_irr
+
+
+
+
+print("Models stratified by metro status")
+print("Negative binomial models, no covariates. Year/county FE")
+print("Contemporaneous boom/bust w/10% threshold. DOES carry through")
+
+print("First income tertile")
+summary(plm_mh13_income1_clust)
+print("Second income tertile")
+summary(plm_mh13_income2_clust)
+print("Third income tertile")
+summary(plm_mh13_income3_clust)
+
+
+
+
+print("First income tertile")
+plm_mh13_income1_out <- cbind(Estimate = coef(plm_mh13_income1_clust), confint(plm_mh13_income1_clust)[-3,])
+plm_mh13_income1_irr <- exp(plm_mh13_income1_out)
+plm_mh13_income1_irr
+
+print("Second income tertile")
+plm_mh13_income2_out <- cbind(Estimate = coef(plm_mh13_income2_clust), confint(plm_mh13_income2_clust)[-3,])
+plm_mh13_income2_irr <- exp(plm_mh13_income2_out)
+plm_mh13_income2_irr
+
+print("Third income tertile")
+plm_mh13_income3_out <- cbind(Estimate = coef(plm_mh13_income3_clust), confint(plm_mh13_income3_clust)[-3,])
+plm_mh13_income3_irr <- exp(plm_mh13_income3_out)
+plm_mh13_income3_irr
 
 
 
