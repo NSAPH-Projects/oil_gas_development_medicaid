@@ -13,7 +13,7 @@
 #
 # OUTPUT FILES  : 	
 #######################################################################################
-# MODIFICATIONS : 
+# MODIFICATIONS : Additional threshold for sensitivity analyses 
 #
 # DATE          :
 # PROGRAMMER    : 
@@ -55,7 +55,7 @@ for(i in 1:length(counties)){
   
   for(j in 2:length(years)){
     
-    # If both values are zeros
+   # If both values are zeros
     if(dat$oil_units[which(dat$FIPS == counties[i] & dat$year == years[j])] == 0 & dat$oil_units[which(dat$FIPS == counties[i] & dat$year == years[j-1])] == 0){
       dat$pct_change_oil[which(dat$FIPS == counties[i] & dat$year == years[j])] <- 0
     }
@@ -179,7 +179,35 @@ dat$ogd_down_25pct[is.na(dat$pct_change_oil) & is.na(dat$pct_change_gas)] <- NA
 
 
 
-### Flag contemporaneous booms and busts
+
+## Flag >=30% production increase/decrease for each year
+
+# gas 
+dat$gas_up_30pct <- ifelse(dat$pct_change_gas >= 30 & !is.na(dat$pct_change_gas), 1, 0)
+dat$gas_up_30pct[is.na(dat$pct_change_gas)] <- NA
+
+dat$gas_down_30pct <- ifelse(dat$pct_change_gas <= -30 & !is.na(dat$pct_change_gas), 1, 0)
+dat$gas_down_30pct[is.na(dat$pct_change_gas)] <- NA
+
+
+# oil
+dat$oil_up_30pct <- ifelse(dat$pct_change_oil >= 30 & !is.na(dat$pct_change_oil), 1, 0)
+dat$oil_up_30pct[is.na(dat$pct_change_oil)] <- NA
+
+dat$oil_down_30pct <- ifelse(dat$pct_change_oil <= -30 & !is.na(dat$pct_change_oil), 1, 0)
+dat$oil_down_30pct[is.na(dat$pct_change_oil)] <- NA
+
+
+# oil or gas
+dat$ogd_up_30pct <- ifelse(dat$pct_change_oil >= 30 | dat$pct_change_gas >= 30 & !is.na(dat$pct_change_oil) & !is.na(dat$pct_change_gas), 1, 0)
+dat$ogd_up_30pct[is.na(dat$pct_change_oil) & is.na(dat$pct_change_gas)] <- NA
+
+dat$ogd_down_30pct <- ifelse(dat$pct_change_oil <= -30 | dat$pct_change_gas <=- 30 & !is.na(dat$pct_change_oil) & !is.na(dat$pct_change_gas), 1, 0)
+dat$ogd_down_30pct[is.na(dat$pct_change_oil) & is.na(dat$pct_change_gas)] <- NA
+
+
+
+### Flag contemporaneous booms and busts - 10pct threshold 
 
 dat$ogd_change_group_cont <- ifelse(is.na(dat$ogd_up_10pct), NA, "Status Quo")
 
@@ -199,7 +227,7 @@ for(i in 1:length(counties)){
         dat$ogd_change_group_cont[which(dat$FIPS == counties[i] & dat$year == years[j])] <- "Boom"
       }
     }
-    
+
     # The middle rows
     if(j > 2 & j < length(years)){
       if(dat$ogd_down_10pct[which(dat$FIPS == counties[i] & dat$year == years[j])] == 1 & (dat$ogd_down_10pct[which(dat$FIPS == counties[i] & dat$year == years[j-1])] == 1 | dat$ogd_down_10pct[which(dat$FIPS == counties[i] & dat$year == years[j+1])] == 1)){
@@ -209,7 +237,7 @@ for(i in 1:length(counties)){
         dat$ogd_change_group_cont[which(dat$FIPS == counties[i] & dat$year == years[j])] <- "Boom"
       }
     }
-    
+
     
     # The last row
     if(j == length(years)){
@@ -280,6 +308,54 @@ for(i in 1:length(counties)){
 
 
 
+### Flag contemporaneous booms and busts - 30 pct threshold
+
+dat$ogd_change_group_cont30 <- ifelse(is.na(dat$ogd_up_30pct), NA, "Status Quo")
+
+# vectors counties and years from above
+
+
+for(i in 1:length(counties)){
+  
+  for(j in 2:length(years)){
+    
+    # The first row
+    if(j == 2){
+      if(dat$ogd_down_30pct[which(dat$FIPS == counties[i] & dat$year == years[j])] == 1 & (dat$ogd_down_30pct[which(dat$FIPS == counties[i] & dat$year == years[j+1])] == 1)){
+        dat$ogd_change_group_cont30[which(dat$FIPS == counties[i] & dat$year == years[j])] <- "Bust"
+      }
+      if(dat$ogd_up_30pct[which(dat$FIPS == counties[i] & dat$year == years[j])] == 1 & (dat$ogd_up_30pct[which(dat$FIPS == counties[i] & dat$year == years[j+1])] == 1)){
+        dat$ogd_change_group_cont30[which(dat$FIPS == counties[i] & dat$year == years[j])] <- "Boom"
+      }
+    }
+    
+    # The middle rows
+    if(j > 2 & j < length(years)){
+      if(dat$ogd_down_30pct[which(dat$FIPS == counties[i] & dat$year == years[j])] == 1 & (dat$ogd_down_30pct[which(dat$FIPS == counties[i] & dat$year == years[j-1])] == 1 | dat$ogd_down_30pct[which(dat$FIPS == counties[i] & dat$year == years[j+1])] == 1)){
+        dat$ogd_change_group_cont30[which(dat$FIPS == counties[i] & dat$year == years[j])] <- "Bust"
+      }
+      if(dat$ogd_up_30pct[which(dat$FIPS == counties[i] & dat$year == years[j])] == 1 & (dat$ogd_up_30pct[which(dat$FIPS == counties[i] & dat$year == years[j-1])] == 1 | dat$ogd_up_30pct[which(dat$FIPS == counties[i] & dat$year == years[j+1])] == 1)){
+        dat$ogd_change_group_cont30[which(dat$FIPS == counties[i] & dat$year == years[j])] <- "Boom"
+      }
+    }
+    
+    
+    # The last row
+    if(j == length(years)){
+      if(dat$ogd_down_30pct[which(dat$FIPS == counties[i] & dat$year == years[j])] == 1 & (dat$ogd_down_30pct[which(dat$FIPS == counties[i] & dat$year == years[j-1])] == 1)){
+        dat$ogd_change_group_cont30[which(dat$FIPS == counties[i] & dat$year == years[j])] <- "Bust"
+      }
+      if(dat$ogd_up_30pct[which(dat$FIPS == counties[i] & dat$year == years[j])] == 1 & (dat$ogd_up_30pct[which(dat$FIPS == counties[i] & dat$year == years[j-1])] == 1)){
+        dat$ogd_change_group_cont30[which(dat$FIPS == counties[i] & dat$year == years[j])] <- "Boom"
+      }
+    }
+    
+  }
+  print(paste0("Finished with county FIPS ", counties[i]))
+}
+
+
+
 
 ## Move boom/bust forward - 10% threshold
 dat$ogd_change_group_cont2 <- dat$ogd_change_group_cont
@@ -309,6 +385,17 @@ dat$ogd_change_group_cont25_2[which(is.na(dat$ogd_change_group_cont25_2))] <- "S
 dat$ogd_change_group_cont25_2[which(is.na(dat$ogd_change_group_cont25))] <- NA
 
 
+## Move boom/bust forward - 30% threshold
+dat$ogd_change_group_cont30_2 <- dat$ogd_change_group_cont30
+dat$ogd_change_group_cont30_2[which(dat$ogd_change_group_cont30_2 == "Status Quo")] <- NA
+
+dat <- dat %>% 
+  dplyr::group_by(FIPS) %>% 
+  tidyr::fill(ogd_change_group_cont30_2, .direction = c("down"))
+
+
+dat$ogd_change_group_cont30_2[which(is.na(dat$ogd_change_group_cont30_2))] <- "Status Quo"
+dat$ogd_change_group_cont30_2[which(is.na(dat$ogd_change_group_cont30))] <- NA
 
 
 ## Export 
